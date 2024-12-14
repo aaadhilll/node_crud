@@ -18,6 +18,7 @@ const signup = async (req, res, next) => {
         lastName: body.lastName,
         email: body.email,
         password: body.password,
+        confirmPassword: body.confirmPassword
     });
     if (!newUser) {
         return res.status(400).json({
