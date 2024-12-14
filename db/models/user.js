@@ -25,20 +25,24 @@ module.exports = sequelize.define('user', {
     type: DataTypes.STRING
   },
   password: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+  confirmPassword: {
     type: DataTypes.VIRTUAL,
     set(value) {
       if (value === this.password) {
+        console.log(value);
         const hashPassword = bcrypt.hashSync(value, 10);
         this.setDataValue('password', hashPassword);
 
       } else {
-        // throw new Error(
-        //   'Password and confirm password must be same'
-    
-        // );
+        throw new Error(
+          'Password and confirm password must be same'
+
+        );
       }
     }
-
   },
   createdAt: {
     allowNull: false,
