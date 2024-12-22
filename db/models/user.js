@@ -6,7 +6,10 @@ const sequelize = require('../../config/database');
 // const AppError = require('../../utils/appError');
 const bcrypt = require('bcrypt');
 const AppError = require('../../utils/appError');
-module.exports = sequelize.define('user', {
+
+const project = require('./project');
+
+const user = sequelize.define('user', {
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -19,7 +22,7 @@ module.exports = sequelize.define('user', {
     validate: {
       notNull: {
         msg: 'user type canot be null',
-        
+
       },
       notEmpty: {
         msg: 'user type canot be'
@@ -88,7 +91,7 @@ module.exports = sequelize.define('user', {
 
       } else {
         throw new AppError(
-          'Password and confirm password must be same',400
+          'Password and confirm password must be same', 400
 
         );
       }
@@ -112,4 +115,11 @@ module.exports = sequelize.define('user', {
     paranoid: true,
     freezeTableName: true,
     modelName: 'user'
-  });
+  },
+);
+
+user.hasMany(project, { foreignKey: 'createdBy' });
+project.belongsTo(user, {
+  foreignKey: 'createdBy',
+});
+module.exports = user;
