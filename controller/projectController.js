@@ -27,8 +27,8 @@ const createProject = catchAsync(async (req, res, next) => {
 });
 
 const getAllProject = catchAsync(async (req, res, next) => {
-  //  const userId = req.user.id;
-    const result = await project.findAll({include: user});
+    const userId = req.user.id;
+    const result = await project.findAll({include: user, where: {createdBy : userId},});
 
     return res.json({
         status: 'success',

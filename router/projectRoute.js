@@ -4,9 +4,9 @@ const { createProject, getAllProject, getProjectById, updateProject, deleteProje
 
 const router = require('express').Router();
 
-router.route('/').post(authentication, restrictTo('1'), createProject).get(authentication, getAllProject);
+router.route('/').post(authentication, restrictTo('1'), createProject).get(authentication, restrictTo('1'), getAllProject);
 
-router.route('/:id').get(authentication, getProjectById).patch(authentication, updateProject).delete(authentication, deleteProject);
+router.route('/:id').get(authentication, restrictTo('1'), getProjectById).patch(authentication, restrictTo('1'), updateProject).delete(authentication, restrictTo('1'), deleteProject);
 
 
 
