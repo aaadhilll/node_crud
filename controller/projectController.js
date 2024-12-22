@@ -35,4 +35,15 @@ const getAllProject = catchAsync(async (req, res, next) => {
     });
 });
 
-module.exports = { createProject, getAllProject };
+
+const getProjectById = catchAsync(async (req, res, next) => {
+    const projectId = req.params.id; 
+    const result = await project.findByPk(projectId, { include: user });
+
+    return res.json({
+        status: 'success',
+        data: result,
+    });
+});
+
+module.exports = { createProject, getAllProject, getProjectById };
